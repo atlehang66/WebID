@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>TestJS</title>
+</head>
+<body>
+    <div>
+        
+    </div>
+    <script>
+        const { exec } = require('child_process');
+
+        // Execute Java code as a child process
+        exec('java -cp . App', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.error(`Error: ${stderr}`);
+                return;
+            }
+            console.log(stdout);
+        });
+    </script>
+</body>
+</html>
