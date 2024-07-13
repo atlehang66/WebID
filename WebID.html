@@ -68,7 +68,13 @@
         </div>
         <div name ="domain-search">
             <center>
-                <input  type="text" class="form-control" id = "urlInput" name="domain" placeholder="mydomain.co.za">
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon3">https://</span>
+                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="myDomainExample.co.za">
+                </div>
+              </div>
+              
                 <br>
                 <button type="button" class="btn btn-outline-primary" onclick="checkURL()">domain-search</button>
             </center>
