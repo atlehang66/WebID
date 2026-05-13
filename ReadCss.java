@@ -8,7 +8,19 @@ import java.util.regex.Pattern;
 
 public class ReadCss {
     public static void main(String[] args) {
-        String cssFile = "admin.css"; // Path to your CSS file
+        List<String> selectors = getNonStandardSelectors("admin.css");
+        System.out.println("Non-standard CSS selectors targeting HTML elements:");
+        for (String selector : selectors) {
+            System.out.println(selector);
+        }
+    }
+
+    /**
+     * Reusable method to extract non-standard CSS selectors from a CSS file
+     * @param cssFile Path to the CSS file
+     * @return List of non-standard selectors found
+     */
+    public static List<String> getNonStandardSelectors(String cssFile) {
         String[] commonHTMLTags = {"h1", "h2", "h3", "h4", "h5", "h6", "p", "a", "div", "span", "img", "ul", "ol",
                                     "li", "table", "tr", "td", "th", "form", "input", "textarea", "button", "select",
                                     "button", "label", "fieldset", "legend", "header", "footer", "nav", "main", 
@@ -36,10 +48,7 @@ public class ReadCss {
             e.printStackTrace();
         }
 
-        System.out.println("Non-standard CSS selectors targeting HTML elements:");
-        for (String selector : nonStandardSelectors) {
-            System.out.println(selector);
-        }
+        return nonStandardSelectors;
     }
 
     private static boolean isCommonHTMLTag(String selector, String[] commonHTMLTags) {
