@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebID - Cybersecurity Analysis Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="logo">⚔️ WebID</h1>
+                    <p class="tagline">Cybersecurity Analysis Toolkit</p>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">System Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="main-grid">
+            <!-- Control Panel -->
+            <section class="control-panel">
+                <h2>🎮 Control Panel</h2>
+                <div class="button-grid">
+                    <button class="btn btn-primary" onclick="analyzeHtml()">
+                        <span class="btn-icon">📄</span>
+                        <span class="btn-label">Analyze HTML</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="analyzeCss()">
+                        <span class="btn-icon">🎨</span>
+                        <span class="btn-label">Analyze CSS</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="extractHead()">
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-label">Extract Head Data</span>
+                    </button>
+                    <button class="btn btn-accent" onclick="showUrlModal()">
+                        <span class="btn-icon">🔗</span>
+                        <span class="btn-label">Compare URLs</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Risk Score Display -->
+            <section class="risk-section">
+                <h2>⚠️ Risk Assessment</h2>
+                <div class="risk-meter-container">
+                    <div class="risk-gauge">
+                        <div class="risk-score" id="riskScore">0</div>
+                        <div class="risk-label">SAFE</div>
+                    </div>
+                    <div class="risk-details">
+                        <div class="risk-item">
+                            <span class="risk-component">URL Similarity</span>
+                            <span class="risk-value" id="riskUrl">0%</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-component">HTML Structure</span>
+                            <span class="risk-value" id="riskHtml">0%</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-component">CSS Anomalies</span>
+                            <span class="risk-value" id="riskCss">0%</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-component">Metadata Flags</span>
+                            <span class="risk-value" id="riskMeta">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Grid -->
+            <section class="results-grid">
+                <!-- Div Count Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📦 HTML Structure</h3>
+                        <span class="card-icon">📊</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric-large" id="divCount">-</div>
+                        <p class="metric-label">Closing Div Tags</p>
+                        <div class="metric-detail">
+                            <small id="divDetail">Click "Analyze HTML" to scan</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge" id="divStatus">pending</span>
+                    </div>
+                </div>
+
+                <!-- URL Similarity Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🔗 URL Comparison</h3>
+                        <span class="card-icon">📈</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric-large" id="urlSimilarity">-</div>
+                        <p class="metric-label">Similarity %</p>
+                        <div class="metric-detail">
+                            <small id="urlDetail">Click "Compare URLs" to analyze</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge" id="urlStatus">pending</span>
+                    </div>
+                </div>
+
+                <!-- CSS Selectors Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🎨 CSS Selectors</h3>
+                        <span class="card-icon">🔢</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric-large" id="cssCount">-</div>
+                        <p class="metric-label">Non-Standard Selectors</p>
+                        <div class="metric-detail">
+                            <small id="cssDetail">Click "Analyze CSS" to scan</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge" id="cssStatus">pending</span>
+                    </div>
+                </div>
+
+                <!-- Head Metadata Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📝 Head Metadata</h3>
+                        <span class="card-icon">📋</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric-large" id="headCount">-</div>
+                        <p class="metric-label">Metadata Tokens</p>
+                        <div class="metric-detail">
+                            <small id="headDetail">Click "Extract Head Data" to analyze</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge" id="headStatus">pending</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container">
+                    <h3>📊 Analysis Metrics</h3>
+                    <canvas id="metricsChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3>🎯 Risk Distribution</h3>
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Detailed Results -->
+            <section class="details-section">
+                <h2>🔎 Detailed Analysis</h2>
+
+                <div class="detail-card">
+                    <h3>URL Comparison Details</h3>
+                    <div class="detail-content">
+                        <div class="detail-row">
+                            <span class="detail-label">URL 1:</span>
+                            <span class="detail-value" id="detailUrl1">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">URL 2:</span>
+                            <span class="detail-value" id="detailUrl2">N/A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Matching Characters:</span>
+                            <span class="detail-value" id="detailMatches">N/A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <h3>CSS Selectors Found</h3>
+                    <div class="detail-content">
+                        <div id="cssSelectors" class="selector-list">
+                            <p class="placeholder">No CSS selectors analyzed yet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Head Metadata Tokens</h3>
+                    <div class="detail-content">
+                        <div id="headTokens" class="token-list">
+                            <p class="placeholder">No head content analyzed yet</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- URL Compare Modal -->
+        <div id="urlModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🔗 Compare URLs</h2>
+                    <button class="modal-close" onclick="closeUrlModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="urlInput1">URL 1:</label>
+                        <input type="text" id="urlInput1" placeholder="https://www.example.com" value="https://www.examplebank.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="urlInput2">URL 2:</label>
+                        <input type="text" id="urlInput2" placeholder="https://www.example.com" value="https://www.exampleebak.com">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="performUrlComparison()">Compare</button>
+                        <button class="btn btn-secondary" onclick="closeUrlModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading hidden">
+            <div class="loading-spinner"></div>
+            <p>Analyzing...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
